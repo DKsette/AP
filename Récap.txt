@@ -1,0 +1,8 @@
+Continuer l'ap 4ou5
+Continuer a faire du css pour le site de l'ap 1
+Faire le javascript pour la recherche par nom
+Faire une boite pour les id("Bienvenu --, vous êtes un employe") & La recherche avancée
+
+
+Faire la page de modif et quand on appui sur confirmer cela renvoie a responsable avec le popup (condition/JS)
+Faire un modal pour quand on veut suppr (en plus)
