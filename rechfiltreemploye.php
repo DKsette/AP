@@ -4,31 +4,10 @@
     ini_set("display_errors", 1);
     session_start();
     if(!$_SESSION['loggin']);
-    function connexion_bdd()
-
-{
-/*************************CONNEXION A LA BDD*************************************** */
-$host = '127.0.0.1';
-$db   = 'm2l';
-$user = 'root';
-$pass = 'root';
-$dsn = "mysql:host=$host;dbname=$db";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-];
-
-try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} 
-catch (\PDOException $e) {
-    print"ERREUR:".$e;
-    throw new \PDOException($e->getMessage(), (int)$e->getCode());
-}
-return $pdo;
-}//Fin fonction connexion_bdd
+    include("bdd.php");
+    $pdo=connexion_bdd();
+    
 //echo"Je suis dans le recherchefiltreemploye.php <br/>"; Test pour le création et vérification
-$pdo=connexion_bdd();
 
 $nom = $_POST['emp'];
 
