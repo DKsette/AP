@@ -5,7 +5,7 @@ function connexion_bdd()
 $host = '127.0.0.1';
 $db   = 'm2l';
 $user = 'root';
-$pass = 'ROOT';
+$pass = 'samsam';
 $dsn = "mysql:host=$host;dbname=$db";
 $options = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,

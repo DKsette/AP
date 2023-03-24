@@ -6,3 +6,10 @@ Faire une boite pour les id("Bienvenu --, vous êtes un employe") & La recherche
 
 Faire la page de modif et quand on appui sur confirmer cela renvoie a responsable avec le popup (condition/JS)
 Faire un modal pour quand on veut suppr (en plus)
+
+
+
+------------------------
+Après avoir saisi une date et une heure, l’application doit proposer l’ensemble
+des salles libres.L’utilisateur peut alors choisir une des salles libres et la
+réserver.
