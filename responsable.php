@@ -4,7 +4,9 @@
     //error_reporting(E_ALL);
     //ini_set("display_errors", 1);
     session_start();
-    if(!$_SESSION['loggin']);
+    if(!$_SESSION['loggin']){
+        header('Location: index.html');
+    };
     include("bdd.php");
     $pdo=connexion_bdd();
 
@@ -89,14 +91,14 @@ if($nom =="")//1ère condition ou tout les chants sont remplis
         <title>Responsable</title>
     </head>
     <body>
-        Loggin is Good <br/>
-        Bienvenu <?php echo $_SESSION['loggin'] ?> <br/>
-        Vous êtes un <?php echo $_SESSION['role'] ?> <br/>
+        <p class="guide">
+        Bienvenue <?php echo $_SESSION['loggin'] ?> <br/>
+        Vous êtes un <?php echo $_SESSION['role'] ?> <br/></p>
 
     
-        <form action="responsable.php" method="post">
+        <form action="responsable.php" method="post" class="guide">
         <p>Recherche avancée ? </br>
-            Réaliser par qui ? : <input type="text" name="emp" />
+
             Etat de la demande :   <SELECT name="etat" size="1">
             <OPTION>--------
             <OPTION>non assignées
@@ -110,59 +112,58 @@ if($nom =="")//1ère condition ou tout les chants sont remplis
             <OPTION>2  
             <OPTION>3
             <OPTION>4
-            </SELECT></br>
+            </SELECT>
             <input type="submit" value="OK"></p> 
         </form>
 <!--      ------------------------------------------------------La boite à modif------------------------------------------------------          -->
 
-        <p class="boite">
+        <p >
         <?php
             if($_GET['demande']){
                 //echo"J'ai bien qqchose dans mon postid <br>";
                 $id=$_GET['demande'];
-                echo $id;
+                $_SESSION['idd']=$id;
+                //echo $id;
                 $stmt1= $pdo->prepare("SELECT * FROM `demmande` WHERE iddemande = ?;");
                 $stmt1 ->execute(array($id));
                 $list1 = $stmt1->fetch();
                 ?>
-                <table width='100%' border='1' cellspacing='0' cellpadding='1'>
-            <tr>
-                <th> Assignement </th>
-                <th>Etat</th>
-                <th> Priorité </th>
-                <th> ID User </th>
-                <th>  </th>
 
-            </tr>
-            <?php
+
+                <form action="modif.php" method="post" class="boite">
+                <label for="cars">
+                <?php
                 echo "  
                           
-                <td> {$list1['assignement']} </td>" ?>
-                <td>Etat de la demande :<SELECT name="etatd" size="0.5">
-                <OPTION>--------
-                <OPTION>non assignées
-                <OPTION>en cours de réalisation
-                <OPTION>en attente
-                <OPTION>terminée
-                </SELECT> </td>
-                <td> Priorité de la demande : <SELECT name="priod" size="1">
-            <OPTION>--------
-            <OPTION>1
-            <OPTION>2  
-            <OPTION>3
-            <OPTION>4
-            </SELECT></br>
-            <td>Affectation : <SELECT name="affecd" size="0.5">
-                <OPTION>--------
-                <OPTION>Faire SQL Requête pour sortir les employes
-                <OPTION>--------
-                </SELECT> </td>
+                {$list1['assignement']} :" ?>
+                </label>
+                <select id="etatd" name="etatd">
+                <option value="">Etat de la demande :</option>
+                    <option value="1">non assignées</option>
+                    <option value="2">en cours de réalisation</option>
+                    <option value="3">en attente</option>
+                    <option value="4">terminée</option>
+                </select>
+                <select name="priod" id="priod">
+                    <option value="">Priorité de la demande : </option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <select name="iduserd" id="iduserd">
+                    <option value="">ID User : </option>
+                    <?php
+                        $stmt2= $pdo->prepare("SELECT loggin FROM user where idrole = 3 OR idrole = 1;");
+                        $stmt2 ->execute(array());
+                        while($list2 = $stmt2->fetch()){
+                            echo "<option value='{$list2['loggin']}'>  {$list2['loggin']}   </option>";}
+            ?>
+                </select>
+                <input type="submit">
+                </form>
                 <?php
-                echo"<td class='crud'> "?> <a class='del' href='supprimer.php?demande=<?=$list['iddemande'] ?>'> Confirmer </a> <?php echo"</td>";
-            }
-
-             
-        ?></table>
+             }?>
         </p>
 
 <!--      ------------------------------------------------------Fin La boite à modif------------------------------------------------------          -->
@@ -189,12 +190,12 @@ if($nom =="")//1ère condition ou tout les chants sont remplis
             <td> {$list['idetat']} </td>
             <td> {$list['idpriorite']} </td> 
             <td> {$list['iduser']}  </td> 
-            <td class='crud'> "?> <a class='mod' href='responsable.php?demande=<?=$list['iddemande']?>'> ModifierR </a> <?php echo"</td>
-            <td class='crud'> "?> <a class='mod' href='modifier.php?demande=<?=$list['iddemande']?>'> Modifier </a> <?php echo"</td>
-            <td class='crud'> "?> <a class='del' href='supprimer.php?demande=<?=$list['iddemande'] ?>'> Supprimer </a> <?php echo"</td>
+            <td class='crud'> "?> <a class='mod' href='responsable.php?demande=<?=$list['iddemande']?>'> Modifier </a> <?php echo"</td>
+            <td class='crud'> "?> <a class='del' href='supprimer.php?demande=<?=$list['iddemande'] ?>' > Supprimer </a> <?php echo"</td>
             ";
         }
         ?> </table>
     </body>
-    <a href="index.html"> <button class='deco' id=btndeco1 >Déconnexion </button></a>
+    <a href="pdf.php"> <button class='deco' id=pdf >PDF </button></a>
+    <a href="disconect.php"> <button class='deco' id=btndeco1 >Déconnexion </button></a>
  </html>

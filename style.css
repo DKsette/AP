@@ -119,3 +119,23 @@ td{
     color: white;
     background: rgba(0, 0, 0, 0.8);
   }*/
+.guide {
+    display: flex;
+    flex-direction: column;
+    border: #000000;
+    font-weight: 700;
+    padding: 10px ;
+    align-items: center;
+    color: #272838;
+    border-bottom: 2px solid #EB9486;
+    background-color: #F9F8F8;
+    }
+.boite {
+align-items: center;
+      border: #000000;
+      font-weight: 700;
+      padding: 20px ;
+      color: #272838;
+      border-bottom: 2px solid #EB9486;
+      background-color: #F9F8F8;
+      }

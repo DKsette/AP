@@ -1,6 +1,8 @@
 <?php
     session_start();
-    if(!$_SESSION['loggin']);
+    if(!$_SESSION['loggin']){
+        header('Location: index.html');
+    };
     include("bdd.php");
     $pdo=connexion_bdd();
 ?>
@@ -17,17 +19,17 @@
     <title>User</title>
 </head>
 <body>
-    Login is Good <br/>
-    
-    Bienvenu <?php echo $_SESSION['loggin'] ?> <br/>
-    Vous êtes un <?php echo $_SESSION['role'] ?> <br/>
+    <p class="guide">
+        Bienvenue <?php echo $_SESSION['loggin'] ?> <br/>
+        Vous êtes un <?php echo $_SESSION['role'] ?> <br/></p>
     <br/>
-    <form action="creatache.php" method="post">
+    <form action="creatache.php" method="post" class="guide">
         <p>Nom de la tache : <input type="text" name="tache"   /></p>
         <p><input type="submit" value="Créer la tache"></p>
+    </form><br/>
 </body>
 <footer>
-<a href="index.html"> Déconnexion </a>
+<a href="disconect.php"> <button class='deco' id=btndeco1 >Déconnexion </button></a>
 </footer>
 </html>
 
